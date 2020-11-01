@@ -17,10 +17,9 @@ TODO: Write aggregation code.
 fun List<User>.aggregate(): List<User> =
     this.groupBy(User::login)
         .map { (login, group) ->
-            group.reduce { acc, user ->
                 User(
-                    login = user.login,
-                    contributions = acc.contributions + user.contributions
+                    login = login,
+                    contributions = group.sumBy(User::contributions)
                 )
             }
-        }.sortedByDescending(User::contributions)
+        .sortedByDescending(User::contributions)
