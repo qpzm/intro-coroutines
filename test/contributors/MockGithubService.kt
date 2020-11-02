@@ -15,7 +15,6 @@ object MockGithubService : GitHubService {
     }
 
     // Uncomment the following implementations after adding these methods to GitHubService:
-
     override suspend fun getOrgRepos(org: String): Response<List<Repo>> {
         delay(reposDelay)
         return Response.success(repos)
