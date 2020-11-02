@@ -3,17 +3,20 @@ package tasks
 import contributors.MockGithubService
 import contributors.expectedConcurrentResults
 import contributors.testRequestData
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Test
 
+@UseExperimental(ExperimentalCoroutinesApi::class)
 class Request5ConcurrentKtTest {
     @Test
-    fun testConcurrent() = runBlocking {
-        val startTime = System.currentTimeMillis()
+    fun testConcurrent() = runBlockingTest {
+        val startTime = currentTime
         val result = loadContributorsConcurrent(MockGithubService, testRequestData)
         Assert.assertEquals("Wrong result for 'loadContributorsConcurrent'", expectedConcurrentResults.users, result)
-        val totalTime = System.currentTimeMillis() - startTime
+        val totalTime = currentTime - startTime
 
         // TODO: uncomment this assertion
         /*
